@@ -1,71 +1,86 @@
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { createBrowserRouter, redirect } from "react-router-dom";
 import AddUser from "../pages/User/AddUser";
-import PageNotFound from "../pages/User/PageNotFound";
-import UpdateUserProfile from "../pages/User/UpdateUserProfile";
+import PageNotFound from "../pages/PageNotFound";
+import UpdateUser from "../pages/User/UpdateUser";
 import UserList from "../pages/User/UserList";
-import Store from "../pages/Store";
-import Admin from "../pages/User";
+import User from "../pages/User";
 import UserDetail from "../pages/User/UserDetail";
-import Bin from "../pages/User/Bin";
+import AddProduct from "../pages/Products/AddProduct";
+import UpdateProduct from "../pages/Products/UpdateProduct";
+import ProductList from "../pages/Products/ProductList";
+import Products from "../pages/Products";
+import ProductDetail from "../pages/Products/ProductDetail";
+import CategoryList from "../pages/Products/CategoryList";
 
 // store : "/" => buy
 
-// admin: "/admin" => manage CRUD
+// user: "/user" => manage CRUD
 
-// const router = createBrowserRouter([
-//   {
-//     path: "/",
-//     element: <Store />,
-//   },
-//   {
-//     path: "/admin",
-//     element: <Admin />,
-//     children: [
-//       {
-//         path: "/admin",
-//         loader: () => redirect('/admin/userList')
-//       },
-//       {
-//         path: "/admin/userList",
-//         element: <UserList />,
-//       },
-//       {
-//         path: "/admin/user-detail/:id",
-//         element: <UserDetail />,
-//       },
-//       {
-//         path: "/admin/add-user",
-//         element: <AddUser />,
-//       },
-//       {
-//         path: "/admin/update-user/:id",
-//         element: <UpdateUserProfile />,
-//       },
-//       {
-//         path: "*",
-//         element: <PageNotFound />,
-//       },
-//       {
-//         path: "/admin/trash",
-//         element: <Bin />
-//       }
-//     ],
-//   },
-// ]);
-// export default router;
+const router = createBrowserRouter([
+  {
+    path: "/user",
+    element: <User />,
+    children: [
+      {
+        path: "/user",
+        loader: () => redirect('/user/user-list')
+      },
+      {
+        path: "/user/user-list",
+        element: <UserList />,
+      },
+      {
+        path: "/user/user-detail/:id",
+        element: <UserDetail />,
+      },
+      {
+        path: "/user/add-user",
+        element: <AddUser />,
+      },
+      {
+        path: "/user/update-user/:id",
+        element: <UpdateUser />,
+      },
+      {
+        path: "*",
+        element: <PageNotFound />,
+      },
+    ],
+  },
+  {
+    path: "/products",
+    element: <Products />,
+    children: [
+      {
+        path: "/products",
+        loader: () => redirect('/products/product-list')
+      },
+      {
+        path: "/products/product-list",
+        element: <ProductList />,
+      },
+      {
+        path: "/products/product-detail/:id",
+        element: <ProductDetail />,
+      },
+      {
+        path: "/products/add-product",
+        element: <AddProduct />,
+      },
+      {
+        path: "/products/update-product/:id",
+        element: <UpdateProduct />,
+      },
+      {
+        path: "/products/product-category",
+        element: <CategoryList />,
+      },
+      {
+        path: "*",
+        element: <PageNotFound />,
+      },
+    ]
+  }
+]);
+export default router;
 
-const AppRouter = () => (
-  <Router>
-    <Switch>
-      <Route exact path="/" component={Store} />
-      <Route exact path="/admin/userList" component={UserList} />
-      <Route exact path="/admin/user-detail/:id" component={UserDetail} />
-      <Route exact path="/admin/add-user" component={AddUser} />
-      <Route exact path="/admin/update-user/:id" component={UpdateUserProfile} />
-      <Route exact path="/admin/trash" component={Bin} />
-      <Route component={PageNotFound} />
-    </Switch>
-  </Router>
-);
-
-export default AppRouter;

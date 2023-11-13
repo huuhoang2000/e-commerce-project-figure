@@ -1,10 +1,14 @@
-import { BrowserRouter as Router } from "react-router-dom";
-import UserList from "./pages/Admin/UserList";
+import { BrowserRouter as Router, useRoutes } from "react-router-dom";
+import { routes } from "./routers/index";
 
-const App = () => (
-  <Router>
-    <UserList />
-  </Router>
-)
+const App = () => {
+  let element = useRoutes(routes);
+
+  return (
+    <Router>
+      {element}
+    </Router>
+  )
+}
   
 export default App;

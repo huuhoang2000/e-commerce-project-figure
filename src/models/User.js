@@ -8,7 +8,7 @@ export default class User {
     this.name = `${name.firstname} ${name.lastname}`;
     this.phone = phone;
     this.address = `${address.city}, ${address.street}, ${address.number}, ${address.zipcode}`;
-    this.role = 'user';
+    this.role = 'user' | 'admin';
     this.isDeleted = false;
   }
 }
