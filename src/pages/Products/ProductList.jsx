@@ -15,6 +15,7 @@ const ProductList = () => {
   const [limit, setLimit] = useState(10);
   const [sortField, setSortField] = useState(null);
   const [sortDirection, setSortDirection] = useState('asc');
+
   useEffect(() => {
     dispatch(fetchProducts());
   }, []);

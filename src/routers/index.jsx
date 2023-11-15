@@ -11,12 +11,16 @@ import ProductList from "../pages/Products/ProductList";
 import Products from "../pages/Products";
 import ProductDetail from "../pages/Products/ProductDetail";
 import CategoryList from "../pages/Products/CategoryList";
-
+// import MainPage from "../pages/Mainpage";
 // store : "/" => buy
 
 // user: "/user" => manage CRUD
 
 const router = createBrowserRouter([
+  // {
+  //   path: "/",
+  //   element: <MainPage />,
+  // },
   {
     path: "/user",
     element: <User />,

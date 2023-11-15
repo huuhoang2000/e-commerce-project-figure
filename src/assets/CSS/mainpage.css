@@ -1,0 +1,33 @@
+h2 { 
+  display: flex; 
+  flex-direction: row; 
+} 
+
+h2:before, 
+h2:after { 
+  content: ""; 
+  flex: 1 1; 
+  border-bottom: 2px solid #000; 
+  margin: auto; 
+} 
+
+
+/* Style for screens smaller than 768px (e.g., iPhone 7) */
+@media only screen and (max-width: 768px) {
+  .product-card {
+      width: 100%;
+      border: 1px solid gold;
+      box-sizing: border-box;
+      margin-bottom: 20px;
+  }
+}
+
+/* Style for screens larger than 768px */
+@media only screen and (min-width: 769px) {
+  .product-card {
+      width: 25%;
+      border: 1px solid gold;
+      box-sizing: border-box;
+      margin-bottom: 20px;
+  }
+}
