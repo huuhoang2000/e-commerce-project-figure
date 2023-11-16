@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
-import { Input, Form } from 'reactstrap';
+import { useDispatch } from 'react-redux';
+import { Input, Form, Button } from 'reactstrap';
+import { useAppSelector } from '../../store/hooks';
 
 function Login() {
   const dispatch = useDispatch();
@@ -8,8 +10,8 @@ function Login() {
   const [password, setPassword] = useState('');
 
   const handleSubmit = async (e) => {
-    
-
+    e.preventDefault();
+    const user = users.find(user => user.username === username && user.password === password);
   };
 
   return (
@@ -26,7 +28,7 @@ function Login() {
         value={password}
         onChange={(e) => setPassword(e.target.value)}
       />
-      <button type="submit">Login</button>
+      <Button type="submit">Login</Button>
     </Form>
   );
 }
