@@ -1,4 +1,4 @@
-import { Button, Card, CardBody, CardImg, CardText, CardTitle, Col, Container, Dropdown, DropdownItem, DropdownMenu, DropdownToggle, Input, Label, Nav, NavItem, Navbar, NavbarBrand, Row, Table } from "reactstrap"
+import { Button, Card, CardBody, CardImg, CardText, CardTitle, Col, Container, Dropdown, DropdownItem, DropdownMenu, DropdownToggle, Input, Nav, NavItem, Navbar, NavbarBrand, Row, Table } from "reactstrap"
 import { getAllProducts, getProductsByCategory } from "../../store/selector/product.selector";
 import { useDispatch } from "react-redux";
 import { useAppSelector } from "../../store/hooks";
@@ -7,32 +7,34 @@ import { deleteProduct, fetchProducts } from "../../store/slices/product.slice";
 import { NavLink, useNavigate } from "react-router-dom";
 import '../../assets/CSS/mainpage.css';
 
-
-const ProductList = () => {
+const MainPage = () => {
   const dispatch = useDispatch();
   const [category, setCategory] = useState('');
-  const products = useAppSelector(state => category ? getProductsByCategory(state, category) : getAllProducts(state));
-  // const [currentPage, setCurrentPage] = useState(1);
-  // const productsPerPage = 4;
-  // const indexOfLastProduct = currentPage * productsPerPage;
-  // const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
-  // const currentProducts = products.slice(indexOfFirstProduct, indexOfLastProduct);
-
-  // const [selectedCategories, setSelectedCategories] = useState([]);
-  // const products = useAppSelector(state => 
-  //   selectedCategories.length > 0 ? getProductsByCategory(state, selectedCategories) : getAllProducts(state));
-
-  const [showFullDescription, setShowFullDescription] = useState(Array(products.length).fill(false));
+  const products = useAppSelector(getAllProducts);
+  const navigate = useNavigate();
+  //drop down button
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const toggle = () => setDropdownOpen(prevState => !prevState);
+  //pagination
+  const [currentPage, setCurrentPage] = useState(1);
+  const productsPerPage = 4;
+  const indexOfLastProduct = currentPage * productsPerPage;
+  const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
+  const currentProducts = products.slice(indexOfFirstProduct, indexOfLastProduct);
+  //show description
+  const [showFullDescription, setShowFullDescription] = useState(Array(products.length).fill(false));
+  //create a array of boolean - false
 
+  //search the item:
+  const [searchTerm, setSearchTerm] = useState('');
 
-  // const handleCheckboxChange = (event) => {
-  //   const { value, checked } = event.target;
-  //   setSelectedCategories(prevState => 
-  //     checked ? [...prevState, value] : prevState.filter(category => category !== value)
-  //   );
-  // }
+  const handleSearch = () => {
+    const filteredProducts = currentProducts.filter(product => 
+      product.title.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    return filteredProducts;
+  }
+
   useEffect(() => {
     dispatch(fetchProducts());
   }, []);
@@ -66,9 +68,7 @@ const ProductList = () => {
           </Container>
         </Navbar>
       </div>
-    <div>
-
-        <div className="background-img">
+      <div className="background-img">
         <Container className="d-flex justify-content-center align-items-center h-100">
           <div>
             <h1 className="mb-3 hero">Welcome to HCMax</h1>
@@ -78,21 +78,10 @@ const ProductList = () => {
       </div>
       <Container>
         <section>
-          <h2>All Products</h2>
-
-          <div>
-            <Input type="select" name="category" id="category" value={category} onChange={e => setCategory(e.target.value)}>
-              <option value="">Select a category</option>
-              <option value="electronics">Electronics</option>
-              <option value="jewelery">Jewelery</option>
-              <option value="men's clothing">Men's Clothing</option>
-              <option value="women's clothing">Women's Clothing</option>
-            </Input>       
-          </div>
-
+          <h2>Featured Products</h2>
           <Row className="d-flex justify-content-center align-items-center">
-
-            {products.map( (product, index) => {
+            {/* Repeat this Card for each product */}
+            {currentProducts.map( (product, index) => {
               return (
                 <Col sm="6" md="4" lg="3">
                   <Card className="productCard">
@@ -109,17 +98,29 @@ const ProductList = () => {
                           {showFullDescription[index] ? 'Show less' : 'Show more'}
                         </button>
                         </CardText>
-                      <div>Price: {product.price}$</div>
-                      <Button className="product-button" href="#">Add to Cart</Button>
-                      <Button className="product-button" href="#">Product Detail</Button>
+                      <div>{product.price}</div>
+                      <Button href="#">Add to Cart</Button>
                     </CardBody>
                   </Card>
                 </Col>
-              )})}
 
+              )})}
+            {/* End repeat */}
           </Row>
+          <div className="naviButton">
+            <button onClick={() => setCurrentPage(currentPage - 1)} disabled={currentPage === 1}>Previous</button>
+            <button onClick={() => setCurrentPage(currentPage + 1)} disabled={currentPage === Math.ceil(products.length / productsPerPage)}>Next</button>
+          </div>
+          <div className="linkToProductList">
+             <Button onClick={() => navigate(`./products/product-list`)}>All Products</Button>
+          </div>
         </section>
       </Container>
+      {/* <Container>
+        <section>
+          <h2>Latest Products</h2>
+        </section>
+      </Container> */}
       <footer>
         <Container>
           <Row>
@@ -137,8 +138,6 @@ const ProductList = () => {
           <Row>
             <Col>
               <p>© 2023 My E-commerce Site</p>
-            </Col>
-            <Col>
               <div className="payment-block">
                 {/* Add payment icons here */}
               </div>
@@ -146,9 +145,8 @@ const ProductList = () => {
           </Row>
         </Container>
       </footer>
-      </div>
-    </>
+     </>
   )
 }
 
-export default ProductList;
+export default MainPage;

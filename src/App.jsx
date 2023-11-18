@@ -1,8 +1,8 @@
 import { BrowserRouter as Router, useRoutes } from "react-router-dom";
-import { routes } from "./routers/index";
+import { router } from "./routers/index";
 
 const App = () => {
-  let element = useRoutes(routes);
+  let element = useRoutes(router);
 
   return (
     <Router>

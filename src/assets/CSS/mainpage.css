@@ -1,3 +1,10 @@
+#root {
+  box-sizing: border-box; /* include padding and border in the element's width */
+  margin: 0; /* remove margin */
+  padding: 0; /* remove padding */
+  width: 100vw; /* or 100vw */
+}
+
 h2 { 
   display: flex; 
   flex-direction: row; 
@@ -11,6 +18,59 @@ h2:after {
   margin: auto; 
 } 
 
+.background-img {
+  background-image: url('../images/06.jpg');
+  height: 100vh;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+.hero {
+  flex: 1 1 auto;
+  text-align: center;
+}
+.navbar {
+  display: flex;
+  justify-content: space-between;
+}
+
+.navItem {
+  flex: 1 1 auto;
+  text-align: center;
+}
+
+.navbarlink {
+  text-decoration: none;
+  color: #000;
+  font-weight: normal;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.naviButton {
+  text-align: center;
+}
+
+.productCard {
+  margin: 2vh;
+}
+
+.linkToProductList {
+  display: flex;
+  justify-content: center;
+  flex: 1 1 auto;
+  text-align: center;
+  margin: 20px 0;
+}
+
+.product-button {
+  margin: 2px;
+}
+
+footer {
+  padding: 5vh 0;
+  background-color: rgb(106, 105, 105);
+}
 
 /* Style for screens smaller than 768px (e.g., iPhone 7) */
 @media only screen and (max-width: 768px) {
