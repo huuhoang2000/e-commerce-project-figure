@@ -1,6 +1,7 @@
 import { Container, Dropdown, DropdownItem, DropdownMenu, DropdownToggle, Nav, NavItem, Navbar, NavbarBrand} from "reactstrap"
 import { NavLink } from "react-router-dom";
 import React, { useState } from 'react'
+import { Link } from "react-scroll";
 
 const HeaderLayout = ( {children} ) => {
     //drop down button
@@ -26,9 +27,11 @@ const HeaderLayout = ( {children} ) => {
                   Menu
                 </DropdownToggle>
                 <DropdownMenu>
-                  <DropdownItem href="#">Contact</DropdownItem>
+                  <Link to="contactUs" smooth={true} duration={50}>
+                    <DropdownItem>Contact</DropdownItem>
+                  </Link>
                   <DropdownItem href="/user/user-login">Login</DropdownItem>
-                  <DropdownItem href="#">Sign Up</DropdownItem>
+                  <DropdownItem href="/user/user-register">Sign Up</DropdownItem>
                 </DropdownMenu>
               </Dropdown>
             </Nav>

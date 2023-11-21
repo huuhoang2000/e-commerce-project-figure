@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link, Element } from 'react-scroll';
 import { Col, Container, Row } from 'reactstrap';
 
  const FooterLayout = () => {
@@ -11,10 +12,12 @@ import { Col, Container, Row } from 'reactstrap';
               <p>A paradise for Manga Anime fans, the shop gathers most typical products of Japanese comics and animation.</p>
             </Col>
             <Col>
-              <h3>Contact Us</h3>
-              <div>Address: </div>
-              <div>Phone Number: </div>
-              <div>Email: </div>
+              <Element name="contactUs">
+                <h3>Contact Us</h3>
+                <div>Address: </div>
+                <div>Phone Number: </div>
+                <div>Email: </div>
+              </Element>
             </Col>
           </Row>
           <Row>

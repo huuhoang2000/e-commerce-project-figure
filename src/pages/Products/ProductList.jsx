@@ -30,12 +30,19 @@ const ProductList = () => {
     });
   };
 
-  const filteredbyCheckBox = filteredProducts.filter(product =>
-    product.category && selectedCategories[product.category]
-  );
+  // const filteredbyCheckBox = filteredProducts.filter(product =>
+  //   product.category && selectedCategories[product.category]
+  // );
+
+  const filterProducts = products.filter(product => {
+    const matchesSearchTerm = product.title.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesCheckbox = product.category && selectedCategories[product.category];
+    return matchesSearchTerm && matchesCheckbox;
+  });
+
+
 
   const categories = useAppSelector(getCategory);
-  // console.log(categories);
   useEffect(() => {
     const initialCategories = {};
     categories && categories.forEach(category => {
@@ -66,7 +73,7 @@ const ProductList = () => {
             <SearchProduct setSearchTerm={setSearchTerm} searchTerm={searchTerm}  data={products} setFilteredData={setFilteredData} />
             <CheckboxFilter categories={categories} handleCategoryChange={handleCategoryChange} selectedCategories={selectedCategories } />
             <Row className="d-flex justify-content-center align-items-center">
-              {filteredbyCheckBox.map( (product) => {
+              {filterProducts.map( (product) => {
                 return (
                   <Col sm="6" md="4" lg="3" key={product.id}>
                     <Card className="productCard">
