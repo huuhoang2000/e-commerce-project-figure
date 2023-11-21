@@ -30,9 +30,17 @@ h2:after {
   flex: 1 1 auto;
   text-align: center;
 }
+
 .navbar {
   display: flex;
   justify-content: space-between;
+}
+
+.navbar-brand {
+  font-weight: bold;
+  font-size: 4vh;
+  margin-left: 0;
+  align-self: left;
 }
 
 .navItem {
@@ -66,10 +74,25 @@ h2:after {
 .product-button {
   margin: 2px;
 }
+/* UserLogin, UserRegister, AdminLogin, AdminRegister */
+.inputUser {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+  border-radius: 4px;
+}
 
-footer {
-  padding: 5vh 0;
-  background-color: rgb(106, 105, 105);
+.btnsubmit {
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  border-radius: 4px;
 }
 
 /* Style for screens smaller than 768px (e.g., iPhone 7) */

@@ -12,6 +12,8 @@ import Products from "../pages/Products";
 import ProductDetail from "../pages/Products/ProductDetail";
 import CategoryList from "../pages/Products/CategoryList";
 import MainPage from "../pages/MainPage/MainPage";
+import UserLogin from "../pages/User/UserLogin";
+import UserRegister from "../pages/User/UserRegister";
 // store : "/" => buy
 
 // user: "/user" => manage CRUD
@@ -19,6 +21,10 @@ import MainPage from "../pages/MainPage/MainPage";
 export const router = createBrowserRouter([
   {
     path: "/",
+    loader: () => redirect('/mainpage'),
+  },
+  {
+    path: "/mainpage",
     element: <MainPage />,
   },
   {
@@ -44,6 +50,14 @@ export const router = createBrowserRouter([
       {
         path: "/user/update-user/:id",
         element: <UpdateUser />,
+      },
+      {
+        path: "/user/user-login",
+        element: <UserLogin />,
+      },
+      {
+        path: "/user/user-register",
+        element: <UserRegister />,
       },
       {
         path: "*",

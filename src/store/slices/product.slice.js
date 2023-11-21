@@ -45,6 +45,7 @@ const productsSlice = createSlice({
     productDetail: null,
     categories: null,
     loading: 'idle',
+    productsByCategory: [],
   },
   reducers: {
     updateProduct: (state, action) => {
@@ -125,7 +126,8 @@ const productsSlice = createSlice({
       })
       .addCase(fetchProductsByCategories.fulfilled, (state, action) => {
         state.loading = 'succeeded';
-        state.allProducts = state.allProducts.filter(product => product.category !== action.payload.category);
+        // state.allProducts = state.allProducts.filter(product => product.category !== action.payload.category);
+        state.productsByCategory = action.payload;
       })
       .addCase(fetchProductsByCategories.rejected, (state, action) => {
         state.loading = 'failed';
