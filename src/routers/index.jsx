@@ -14,9 +14,16 @@ import CategoryList from "../pages/Products/CategoryList";
 import MainPage from "../pages/MainPage/MainPage";
 import UserLogin from "../pages/User/UserLogin";
 import UserRegister from "../pages/User/UserRegister";
+import Admin from "../pages/Admin";
+import AdminLogin, { checkTokenLogin } from "../pages/Login/AdminLogin";
 // store : "/" => buy
 
 // user: "/user" => manage CRUD
+
+const checkToken = () => {
+  const token = localStorage.getItem('token');
+  return token ? null : redirect('/admin/admin-login');
+}
 
 export const router = createBrowserRouter([
   {
@@ -26,79 +33,82 @@ export const router = createBrowserRouter([
   {
     path: "/mainpage",
     element: <MainPage />,
+    loader: checkToken,
   },
   {
-    path: "/user",
+    path: "*",
+    element: <PageNotFound />,
+  },
+  {
+    path: "/admin/index",
+    element: <Admin/>,
+    // loader: checkToken,
+  },
+  {
+    path: "/admin/admin-login",
+    element: <AdminLogin/>,
+    loader: checkTokenLogin,
+  },
+  {
+    path: "/admin/user",
     element: <User />,
     children: [
       {
-        path: "/user",
-        loader: () => redirect('/user/user-list')
+        path: "/admin/user",
+        loader: () => redirect('/admin/user/user-list')
       },
       {
-        path: "/user/user-list",
+        path: "/admin/user/user-list",
         element: <UserList />,
       },
       {
-        path: "/user/user-detail/:id",
+        path: "/admin/user/user-detail/:id",
         element: <UserDetail />,
       },
       {
-        path: "/user/add-user",
+        path: "/admin/user/add-user",
         element: <AddUser />,
       },
       {
-        path: "/user/update-user/:id",
+        path: "/admin/user/update-user/:id",
         element: <UpdateUser />,
       },
       {
-        path: "/user/user-login",
+        path: "/admin/user/user-login",
         element: <UserLogin />,
       },
       {
-        path: "/user/user-register",
+        path: "/admin/user/user-register",
         element: <UserRegister />,
       },
-      {
-        path: "*",
-        element: <PageNotFound />,
-      },
-    ],
+    ]
   },
   {
-    path: "/products",
+    path: "/admin/products",
     element: <Products />,
     children: [
       {
-        path: "/products",
-        loader: () => redirect('/products/product-list')
-      },
-      {
-        path: "/products/product-list",
+        path: "/admin/products/product-list",
         element: <ProductList />,
       },
       {
-        path: "/products/product-detail/:id",
+        path: "/admin/products/product-detail/:id",
         element: <ProductDetail />,
       },
       {
-        path: "/products/add-product",
+        path: "/admin/products/add-product",
         element: <AddProduct />,
       },
       {
-        path: "/products/update-product/:id",
+        path: "/admin/products/update-product/:id",
         element: <UpdateProduct />,
       },
       {
-        path: "/products/product-category",
+        path: "/admin/products/product-category",
         element: <CategoryList />,
       },
-      {
-        path: "*",
-        element: <PageNotFound />,
-      },
     ]
-  }
+  },
 ]);
 
 

@@ -1,32 +1,13 @@
 import { Container, Dropdown, DropdownItem, DropdownMenu, DropdownToggle, Nav, NavItem, Navbar, NavbarBrand} from "reactstrap"
 import { NavLink } from "react-router-dom";
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { Link } from "react-scroll";
 
 const HeaderLayout = ( {children} ) => {
     //drop down button
     const [dropdownOpen, setDropdownOpen] = useState(false);
     const toggle = () => setDropdownOpen(prevState => !prevState);
-    // login state
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
-    // get username from token once login is complete.
-    const username = localStorage.getItem('username');
-
-    // Call this function when the user logs out
-    const handleLogout = () => {
-      setIsLoggedIn(false);
-      localStorage.removeItem('token');
-      localStorage.removeItem('username');
-    };
-
-    useEffect(() => {
-      const token = localStorage.getItem('token');
-      if (token) {
-        setIsLoggedIn(true);
-      }
-    }, []);
-
-    return (
+  return (
     <div>
       <Navbar color="light" light expand="md">
           <Container fluid className=" d-flex justify-content-between">
@@ -41,11 +22,6 @@ const HeaderLayout = ( {children} ) => {
               <NavItem className="pe-1 ps-1 navItem">
                 <NavLink href="#" className="navbarlink">Cart</NavLink>
               </NavItem>
-              {isLoggedIn || username ? (
-                <NavItem className="pe-1 ps-1 navItem">
-                  <NavLink href="#"></NavLink>
-                </NavItem>
-              ) : null}
               <Dropdown className="pe-1 ps-1 navItem" nav isOpen={dropdownOpen} toggle={toggle}>
                 <DropdownToggle nav caret>
                   Menu
@@ -54,17 +30,8 @@ const HeaderLayout = ( {children} ) => {
                   <Link to="contactUs" smooth={true} duration={50}>
                     <DropdownItem>Contact</DropdownItem>
                   </Link>
-        
-                   {isLoggedIn || username ? (
-                    <>
-                      <DropdownItem onClick={handleLogout}>Logout</DropdownItem>                    </>
-                   ) : (
-                    <>
-                      <DropdownItem href="/admin/admin-login">Login</DropdownItem>
-                      <DropdownItem href="/admin/user/user-register">Sign Up</DropdownItem>
-                    </>
-                   )}
-
+                  <DropdownItem href="/admin/user/user-login">Login</DropdownItem>
+                  <DropdownItem href="/admin/user/user-register">Sign Up</DropdownItem>
                 </DropdownMenu>
               </Dropdown>
             </Nav>
