@@ -10,8 +10,17 @@ export const fetchLoginValidation = createAsyncThunk('login/fetchLoginValidation
 const loginSlice = createSlice({
   name: "login",
   initialState: {
+    isLoggedIn: false,
     token: null,
     loading: 'idle',
+  },
+  reducers: {
+    login(state) {
+      state.isLoggedIn = true;
+    },
+    logout(state) {
+      state.isLoggedIn = false;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -33,3 +42,4 @@ const loginSlice = createSlice({
 
 export const loginReducer = loginSlice.reducer;
 
+export const { login, logout } = loginSlice.actions;

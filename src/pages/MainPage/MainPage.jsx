@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import { useAppSelector } from "../../store/hooks";
 import { useEffect, useState } from "react";
 import {  fetchProducts } from "../../store/slices/product.slice";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Pagination from "../../components/Pagination";
 import '../../assets/CSS/mainpage.css';
 import ShortenDescription from "../../components/ShortenDescription";
@@ -57,7 +57,7 @@ const MainPage = () => {
                         </CardText>
                         <div>Price: {product.price}$</div>
                         <Button className="product-button" href="#">Add to Cart</Button>
-                        <Button className="product-button" href="#">Product Detail</Button>
+                        <Link to={`/admin/products/product-detail/${product.id}`} className="btn btn-primary">Product Detail</Link>
                       </CardBody>
                     </Card>
                   </Col>

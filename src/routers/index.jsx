@@ -15,14 +15,20 @@ import MainPage from "../pages/MainPage/MainPage";
 import UserLogin from "../pages/User/UserLogin";
 import UserRegister from "../pages/User/UserRegister";
 import Admin from "../pages/Admin";
-import AdminLogin, { checkTokenLogin } from "../pages/Login/AdminLogin";
+import AdminLogin, { checkTokenLogin } from "../pages/Admin/AdminLogin";
 // store : "/" => buy
 
 // user: "/user" => manage CRUD
 
 const checkToken = () => {
   const token = localStorage.getItem('token');
-  return token ? null : redirect('/admin/admin-login');
+  if (!token) {
+    // Store the current location in the session storage
+    sessionStorage.setItem('preLoginLocation', window.location.pathname);
+    return redirect('/admin/admin-login');
+  }
+  // return token ? null : redirect('/admin/admin-login');
+  return null;
 }
 
 export const router = createBrowserRouter([
@@ -33,7 +39,6 @@ export const router = createBrowserRouter([
   {
     path: "/mainpage",
     element: <MainPage />,
-    loader: checkToken,
   },
   {
     path: "*",
@@ -42,7 +47,6 @@ export const router = createBrowserRouter([
   {
     path: "/admin/index",
     element: <Admin/>,
-    // loader: checkToken,
   },
   {
     path: "/admin/admin-login",
@@ -60,18 +64,22 @@ export const router = createBrowserRouter([
       {
         path: "/admin/user/user-list",
         element: <UserList />,
+        loader: checkToken,
       },
       {
         path: "/admin/user/user-detail/:id",
         element: <UserDetail />,
+        loader: checkToken,
       },
       {
         path: "/admin/user/add-user",
         element: <AddUser />,
+        loader: checkToken,
       },
       {
         path: "/admin/user/update-user/:id",
         element: <UpdateUser />,
+        loader: checkToken,
       },
       {
         path: "/admin/user/user-login",
@@ -98,15 +106,17 @@ export const router = createBrowserRouter([
       {
         path: "/admin/products/add-product",
         element: <AddProduct />,
+        loader: checkToken,
       },
       {
         path: "/admin/products/update-product/:id",
         element: <UpdateProduct />,
+        loader: checkToken,
       },
-      {
-        path: "/admin/products/product-category",
-        element: <CategoryList />,
-      },
+      // {
+      //   path: "/admin/products/product-category",
+      //   element: <CategoryList />,
+      // },
     ]
   },
 ]);

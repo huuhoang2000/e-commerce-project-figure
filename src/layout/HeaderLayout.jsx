@@ -1,28 +1,35 @@
 import { Container, Dropdown, DropdownItem, DropdownMenu, DropdownToggle, Nav, NavItem, Navbar, NavbarBrand} from "reactstrap"
 import { NavLink } from "react-router-dom";
+import { login, logout } from '../store/slices/login.slice'
 import React, { useEffect, useState } from 'react'
 import { Link } from "react-scroll";
+import { useAppSelector } from "../store/hooks";
+import { useDispatch } from "react-redux";
 
 const HeaderLayout = ( {children} ) => {
     //drop down button
     const [dropdownOpen, setDropdownOpen] = useState(false);
     const toggle = () => setDropdownOpen(prevState => !prevState);
     // login state
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
     // get username from token once login is complete.
     const username = localStorage.getItem('username');
 
+    const isLoggedIn = useAppSelector((state) => state.login.isLoggedIn);
+    const dispatch = useDispatch();
+
     // Call this function when the user logs out
     const handleLogout = () => {
-      setIsLoggedIn(false);
+      dispatch(logout);
       localStorage.removeItem('token');
       localStorage.removeItem('username');
     };
 
+    // Call this function when the user logs in
+
     useEffect(() => {
       const token = localStorage.getItem('token');
       if (token) {
-        setIsLoggedIn(true);
+        dispatch(login);
       }
     }, []);
 
@@ -36,14 +43,14 @@ const HeaderLayout = ( {children} ) => {
                 <NavLink to="/mainpage" className="navbarlink">Home</NavLink>
               </NavItem>
               <NavItem className="pe-1 ps-1 navItem">
-                <NavLink to="/admi/products/product-list" className="navbarlink">Shop</NavLink>
+                <NavLink to="/admin/products/product-list" className="navbarlink">Shop</NavLink>
               </NavItem>
               <NavItem className="pe-1 ps-1 navItem">
                 <NavLink href="#" className="navbarlink">Cart</NavLink>
               </NavItem>
               {isLoggedIn || username ? (
                 <NavItem className="pe-1 ps-1 navItem">
-                  <NavLink href="#"></NavLink>
+                  <NavLink className="link-deco">Welcome, {username}</NavLink>
                 </NavItem>
               ) : null}
               <Dropdown className="pe-1 ps-1 navItem" nav isOpen={dropdownOpen} toggle={toggle}>

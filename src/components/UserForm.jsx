@@ -15,6 +15,7 @@ const UserForm = ( {submitBtnText, onSubmit} ) => {
 
   const handleUserChange = (e) => {
     const {name, value} = e.target;
+    
     if (name.includes('.')) {
       const [field, subfield] = name.split('.');
       setUserFormUserDetail(prev => ({

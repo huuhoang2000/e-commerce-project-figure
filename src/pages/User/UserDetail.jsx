@@ -51,8 +51,8 @@ const UserDetail = () => {
               </>
             ) : ''}
           </p>
-          <Button color="primary" onClick={() => navigate('/user/userList')}>Back to user list</Button>
-          <Button color="primary" onClick={() => navigate(`/user/update-user/${user.id}`)}>Update user</Button>
+          <Button color="primary" onClick={() => navigate('/admin/user/user-list')}>Back to user list</Button>
+          <Button color="primary" onClick={() => navigate(`/admin/user/update-user/${user.id}`)}>Update user</Button>
         </div>
 
     </>

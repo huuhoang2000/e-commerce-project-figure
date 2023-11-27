@@ -7,6 +7,6 @@ export default class Product {
     this.category = category;
     this.description = description;
     this.image = image;
-    // this.isDeleted = false;
+    this.isDeleted = false;
   }
 }

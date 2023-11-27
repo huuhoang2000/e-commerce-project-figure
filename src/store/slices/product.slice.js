@@ -13,7 +13,6 @@ export const createProduct = createAsyncThunk('products/createProduct', async (p
 //Get a single product by id
 export const fetchProductsById = createAsyncThunk('products/fetchProductById', async (id) => {
   const response = await axios.get(`https://fakestoreapi.com/products/${id}`);
-  console.log(response.data);
   return response.data;
 })
 
@@ -29,7 +28,6 @@ export const deleteProduct  = createAsyncThunk('products/deleteProduct', async (
 //get all product categories
 export const fetchProductCategory = createAsyncThunk('products/fetchProductCategory', async () => {
   const response = await axios.get(`https://fakestoreapi.com/products/categories`);
-  console.log(response.data);
   return response.data;
 })
 //get all products by category types
@@ -108,7 +106,7 @@ const productsSlice = createSlice({
       })
       .addCase(deleteProduct.rejected, (state, action) => {
         state.loading = 'failed';
-        state.error = action.error.message;
+        state.allProducts = action.error.message;
       })
       .addCase(fetchProductCategory.pending, (state) => {
         state.loading = 'loading';

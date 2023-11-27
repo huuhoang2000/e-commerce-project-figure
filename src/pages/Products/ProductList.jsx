@@ -1,4 +1,4 @@
-import { Button, Card, CardBody, CardImg, CardText, CardTitle, Col, Container, Input, Row } from "reactstrap"
+import { Button, Card, CardBody, CardImg, CardText, CardTitle, Col, Container, Row } from "reactstrap"
 import { getAllProducts, getCategory } from "../../store/selector/product.selector";
 import { useDispatch } from "react-redux";
 import { useAppSelector } from "../../store/hooks";
@@ -10,6 +10,7 @@ import FooterLayout from "../../layout/FooterLayout";
 import SearchProduct from "../../components/SearchProduct";
 import ShortenDescription from "../../components/ShortenDescription";
 import CheckboxFilter from "../../components/CheckboxFilter";
+import { Link } from "react-router-dom";
 
 const ProductList = () => {
   const dispatch = useDispatch();
@@ -72,12 +73,12 @@ const ProductList = () => {
             <h2>All Products</h2>
             <SearchProduct setSearchTerm={setSearchTerm} searchTerm={searchTerm}  data={products} setFilteredData={setFilteredData} />
             <CheckboxFilter categories={categories} handleCategoryChange={handleCategoryChange} selectedCategories={selectedCategories } />
-            <Row className="d-flex justify-content-center align-items-center">
+            <Row className="d-flex flex-column flex-sm-row justify-content-center align-items-center">
               {filterProducts.map( (product) => {
                 return (
                   <Col sm="6" md="4" lg="3" key={product.id}>
                     <Card className="productCard">
-                      <CardImg top width="100%" src={product.image} alt="Card image cap" />
+                      <CardImg top className="productCardImage" width="100%" src={product.image} alt="Card image cap" />
                       <CardBody>
                         <CardTitle tag="h5">{product.title}</CardTitle>
                         <CardText>
@@ -85,7 +86,7 @@ const ProductList = () => {
                         </CardText>
                         <div>Price: {product.price}$</div>
                         <Button className="product-button" href="#">Add to Cart</Button>
-                        <Button className="product-button" href="#">Product Detail</Button>
+                        <Link to={`/admin/products/product-detail/${product.id}`} className="btn btn-primary">Product Detail</Link>
                       </CardBody>
                     </Card>
                   </Col>

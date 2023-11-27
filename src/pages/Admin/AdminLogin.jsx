@@ -2,25 +2,21 @@ import React, { useEffect, useState } from 'react';
 import { redirect } from "react-router-dom";
 import { useDispatch } from 'react-redux';
 import { Input, Form, Button, Label, FormGroup } from 'reactstrap';
-import { useAppSelector } from '../../store/hooks';
-import { getAllUsers } from '../../store/selector/user.selector';
 import HeaderLayout from '../../layout/HeaderLayout';
 import FooterLayout from '../../layout/FooterLayout';
+import { login } from '../../store/slices/login.slice'
 import '../../assets/CSS/mainpage.css';
 import { fetchLoginValidation } from '../../store/slices/login.slice';
-import { getLoginToken } from '../../store/selector/login.selector';
 import { fetchUser } from '../../store/slices/user.slice';
 
 export const checkTokenLogin = () => {
   const token = localStorage.getItem('token');
-  // return token ? redirect('/admin/index') : null;
   return token ? redirect('/mainpage') : null;
 }
 
 function AdminLogin() {
   const dispatch = useDispatch();
-  const users = useAppSelector(getAllUsers);
-  const loginValidation = useAppSelector(getLoginToken);
+  // const loginValidation = useAppSelector(getLoginToken);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
@@ -30,19 +26,11 @@ function AdminLogin() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
-    const user = users.find(user => user.username === username && user.password === password);
-
     // Validation
     if (!username || !password) {
       alert('Please enter your username and password.');
       return;
     }
-
-    // Call this function when the user logs in
-    const handleLogin = () => {
-      setIsLoggedIn(true);
-    };
 
     dispatch(fetchLoginValidation({ username, password }))
   .then((action) => {
@@ -52,7 +40,22 @@ function AdminLogin() {
       alert('You have logged in successfully!');
       //store username in localStorage once login successful
       localStorage.setItem('username', username);
-      handleLogin();
+      dispatch(login());
+
+      // Get the pre-login location from the session storage
+      const preLoginLocation = sessionStorage.getItem('preLoginLocation');
+
+      // If a pre-login location was stored, navigate to it
+      if (preLoginLocation) {
+        navigate(preLoginLocation);
+      } else {
+        // Otherwise, navigate to a default location
+        navigate('/admin/index');
+      }
+
+      // Remove the pre-login location from the session storage
+      sessionStorage.removeItem('preLoginLocation');
+      
     }
   })
   .catch((error) => {

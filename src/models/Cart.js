@@ -5,5 +5,6 @@ export default class Cart {
     this.userId = userId;
     this.date = date;
     this.products = products;
+    this.isDeleted = false;
   }
 }
