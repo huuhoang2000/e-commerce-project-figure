@@ -9,8 +9,8 @@ const UpdateUser = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const loading = useSelector(getLoading);
-  const user = useSelector(getUserDetails);
+  const loading = useAppSelector(getLoading);
+  const user = useAppSelector(getUserDetails);
 
   useEffect(() => {
     dispatch(fetchUserById(Number(id)));
@@ -38,16 +38,18 @@ const UpdateUser = () => {
     }
   }
   if (!user) {
-    return <>
-      <h1>404 | User with {id} is not found</h1>
-      <Button color="primary" onClick={() => navigate(`/user/user-list`)}>Return to user list</Button>
-    </>
+    return (
+      <>
+        <h1>404 | User with {id} is not found</h1>
+        <Button color="primary" onClick={() => navigate(`/user/user-list`)}>Return to user list</Button>
+      </>
+    ) 
   }
 
   return (
     <>
       <div>
-        <h1>Update User Information</h1>
+        <h2>Update User Information</h2>
         <Button color="primary" onClick={() => navigate(`/user/user-detail/${id}`)}>Back to user detail</Button>
         <Button color="primary" onClick={() => navigate(`/user/user-list`)}>Return to user list</Button>
         <UserForm title="Update task" submitBtnText="Save" productinfo={user} onSubmit={handleSubmit}></UserForm>

@@ -10,12 +10,16 @@ import UpdateProduct from "../pages/Products/UpdateProduct";
 import ProductList from "../pages/Products/ProductList";
 import Products from "../pages/Products";
 import ProductDetail from "../pages/Products/ProductDetail";
-import CategoryList from "../pages/Products/CategoryList";
 import MainPage from "../pages/MainPage/MainPage";
 import UserLogin from "../pages/User/UserLogin";
 import UserRegister from "../pages/User/UserRegister";
 import Admin from "../pages/Admin";
+import Carts from "../pages/Carts"
+import AddNewCart from "../pages/Carts/AddNewCart";
+import CartList from "../pages/Carts/CartList";
 import AdminLogin, { checkTokenLogin } from "../pages/Admin/AdminLogin";
+import { CartDescription } from "../pages/Carts/CartDescription";
+import UpdateCart from "../pages/Carts/UpdateCart";
 // store : "/" => buy
 
 // user: "/user" => manage CRUD
@@ -113,10 +117,30 @@ export const router = createBrowserRouter([
         element: <UpdateProduct />,
         loader: checkToken,
       },
-      // {
-      //   path: "/admin/products/product-category",
-      //   element: <CategoryList />,
-      // },
+    ]
+  },
+  {
+    path: "/admin/carts",
+    element: <Carts />,
+    children: [
+      {
+        path: "/admin/carts/cart-list",
+        element: <CartList />,
+      },
+      {
+        path: "/admin/carts/cart-detail/:id",
+        element: <CartDescription />,
+      },
+      {
+        path: "/admin/carts/add-cart",
+        element: <AddNewCart />,
+        loader: checkToken,
+      },
+      {
+        path: "/admin/carts/update-cart/:id",
+        element: <UpdateCart />,
+        loader: checkToken,
+      },
     ]
   },
 ]);

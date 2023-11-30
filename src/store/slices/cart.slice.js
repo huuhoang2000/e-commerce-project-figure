@@ -1,32 +1,34 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from 'axios';
-
+//get all carts
 export const fetchAllCarts = createAsyncThunk('carts/fetchAllCarts', async () => {
-  const response = await axios.get('https://fakestoreapi.com/carts');
-  return response.data;
-});
+    const response = await axios.get('https://fakestoreapi.com/carts');
+    console.log(response.data); // log the response data
+    return response.data;
 
-export const fetchACartById = createAsyncThunk('carts/fetchACartById', async () => {
+});
+//get a single cart
+export const fetchACartById = createAsyncThunk('carts/fetchACartById', async (id) => {
   const response = await axios.get(`https://fakestoreapi.com/carts/${id}`);
   return response.data;
 });
-
+//get cart limit results
 export const fetchCartsByLimit = createAsyncThunk('carts/fetchCartsByLimit', async (limit) => {
   const response = await axios.get(`https://fakestoreapi.com/carts?limit=${limit}`);
   return response.data;
 });
-
+//get cart sort desc
 export const fetchCartsDesc = createAsyncThunk('carts/fetchCartsDesc', async () => {
   const response = await axios.get('https://fakestoreapi.com/carts?sort=desc');
   return response.data;
 });
-
+//get cart sort asc
 export const fetchCartsAsc = createAsyncThunk('carts/fetchCartsAsc', async () => {
   const response = await axios.get('https://fakestoreapi.com/carts?sort=asc');
   return response.data;
 });
-
-export const fetchCartsByDate = createAsyncThunk('carts/fetchCartsByDate', async (startDate, endDate) => {
+//get carts in date range
+export const fetchCartsInDateRange = createAsyncThunk('carts/fetchCartsByDate', async (startDate, endDate) => {
   let url = 'https://fakestoreapi.com/carts';
   if (startDate && endDate) {
     url += `?startdate=${startDate}&enddate=${endDate}`;
@@ -38,8 +40,8 @@ export const fetchCartsByDate = createAsyncThunk('carts/fetchCartsByDate', async
   const response = await axios.get(url);
   return response.data;
 });
-
-export const fetchUserCartsById = createAsyncThunk('carts/fetchUserCartsById', async (userId, { startDate, endDate }) => {
+//get user cart - get all carts with user id
+export const fetchUserCartsById = createAsyncThunk('carts/fetchUserCartsById', async ({userId, startDate, endDate }) => {
   let url = `https://fakestoreapi.com/carts/user/${userId}`;
   if (startDate && endDate) {
     url += `?startdate=${startDate}&enddate=${endDate}`;
@@ -51,19 +53,9 @@ export const fetchUserCartsById = createAsyncThunk('carts/fetchUserCartsById', a
   const response = await axios.get(url);
   return response.data;
 });
-
+//add a new cart
 export const addCart = createAsyncThunk('carts/addCart', async (cart) => {
   const response = await axios.post('https://fakestoreapi.com/carts', cart);
-  return response.data;
-});
-//update entire cart
-// export const updateCart = createAsyncThunk('carts/updateCart', async ({ id, cart }) => {
-//   const response = await axios.put(`https://fakestoreapi.com/carts/${id}`, cart);
-//   return response.data;
-// });
-//update some properties of a cart
-export const patchCart = createAsyncThunk('carts/patchCart', async ({ id, cart }) => {
-  const response = await axios.patch(`https://fakestoreapi.com/carts/${id}`, cart);
   return response.data;
 });
 
@@ -76,6 +68,8 @@ const cartsSlice = createSlice({
   name: "carts",
   initialState: {
     allCarts: [],
+    products: [],
+    cartDetail: null,
     cart: null,
     cartByLimit: [],
     cardDesc: [],
@@ -85,7 +79,8 @@ const cartsSlice = createSlice({
     loading: 'idle',
   },
   reducers: {
-    updateCart: () => {
+    //update a cart
+    updateCart: (state, action) => {
       const { id, cartUpdateDetail } = action.payload;
       const index = state.allCarts.findIndex(
         (cart) => cart.id === id && !cart.isDeleted
@@ -112,7 +107,17 @@ const cartsSlice = createSlice({
         state.loading = 'failed';
         state.allCarts = action.error.message;
       })
-      // .addCase()
+      .addCase(fetchACartById.pending, (state) => {
+        state.loading = 'loading';
+      })
+      .addCase(fetchACartById.fulfilled, (state, action) => {
+        state.loading = 'succeeded';
+        state.cartDetail = action.payload;
+      })
+      .addCase(fetchACartById.rejected, (state, action) => {
+        state.loading = 'failed';
+        state.cartDetail = action.error.message;
+      })
       .addCase(fetchCartsByLimit.pending, (state) => {
         state.loading = 'loading';
       })
@@ -146,25 +151,25 @@ const cartsSlice = createSlice({
         state.loading = 'failed';
         state.cardAsc = action.error.message;
       })
-      .addCase(fetchCartsByDate.pending, (state) => {
+      .addCase(fetchCartsInDateRange.pending, (state) => {
         state.loading = 'loading'
       })
-      .addCase(fetchCartsByDate.fulfilled, (state, action) => {
+      .addCase(fetchCartsInDateRange.fulfilled, (state, action) => {
         state.loading = 'succeeded'
         state.cartsByDate = action.payload;
       })
-      .addCase(fetchCartsByDate.rejected, (state, action) => {
+      .addCase(fetchCartsInDateRange.rejected, (state, action) => {
         state.loading = 'failed'
         state.cartsByDate = action.error.message;
       })
-      .addCase(fetchUserCartsById.fulfilled, (state) => {
+      .addCase(fetchUserCartsById.pending, (state) => {
         state.loading = 'loading';
       })
       .addCase(fetchUserCartsById.fulfilled, (state, action) => {
         state.loading = 'succeeded';
         state.userCartsById = action.payload;
       })
-      .addCase(fetchUserCartsById.fulfilled, (state, action) => {
+      .addCase(fetchUserCartsById.rejected, (state, action) => {
         state.loading = 'failed';
         state.userCartsById = action.error.message;
       })

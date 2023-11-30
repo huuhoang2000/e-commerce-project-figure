@@ -5,7 +5,7 @@ const productArrayState = (state) => state.products.allProducts;
 
 export const getAllProducts = createSelector(productState, (products) => products.allProducts);
 export const getProductDetails = createSelector(productState, (products) => products.productDetail);
-export const getLoading = createSelector(productState, (products) => products.getLoading);
+export const getLoading = createSelector(productState, (products) => products.loading);
 export const getCategory = createSelector(productState, (products) => products.categories);
 export const getProductsByCategory = createSelector(
   productArrayState,

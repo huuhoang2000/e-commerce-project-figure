@@ -19,7 +19,7 @@ const HeaderLayout = ( {children} ) => {
 
     // Call this function when the user logs out
     const handleLogout = () => {
-      dispatch(logout);
+      dispatch(logout());
       localStorage.removeItem('token');
       localStorage.removeItem('username');
     };
@@ -29,7 +29,7 @@ const HeaderLayout = ( {children} ) => {
     useEffect(() => {
       const token = localStorage.getItem('token');
       if (token) {
-        dispatch(login);
+        dispatch(login());
       }
     }, []);
 

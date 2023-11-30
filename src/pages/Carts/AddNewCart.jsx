@@ -3,6 +3,7 @@ import { useAppSelector } from '../../store/hooks'
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { Button } from 'reactstrap';
+import { fetchAllCarts } from '../../store/slices/cart.slice';
 
 export const AddNewCart = () => {
   const navigate = useNavigate();
@@ -22,8 +23,9 @@ export const AddNewCart = () => {
       ...cartDetail,
       isDeleted: false,
     }
-    dispatch().then(() => {
-      
+    dispatch().then(addCart(newCart)).then(() => {
+      dispatch(fetchAllCarts());
+      navigate('../cart-list');
     }); 
 
   }
@@ -38,3 +40,5 @@ export const AddNewCart = () => {
     </>
   )
 }
+
+export default AddNewCart;
