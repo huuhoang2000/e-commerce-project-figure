@@ -27,12 +27,16 @@ const UserList = () => {
         user.username, 
         user.email, 
         user.password, 
-        `${user.name.firstname} ${user.name.lastname}`,
+        `${user.name.firstname} ${user.name.lastname}`, 
+        // user.name,
         user.phone, 
         `${user.address.city}, ${user.address.street}, ${user.address.number}, ${user.address.zipcode}` 
+        // user.address
         );
+        console.log(user.name);
+        console.log(user.address);
       updatedUser.role = newRole;
-      dispatch(editUser({id, userFormDetail: updatedUser}))
+      dispatch(editUser({id, userFormDetail: updatedUser.toPlainObject()}))
     }
   }
 
@@ -55,7 +59,7 @@ const UserList = () => {
     <>
       <h1 className="text-center">User List</h1>
         <div>
-          <Button color="primary" onClick={() => navigate(`/user/add-user`)}>Add a new user account</Button>
+          <Button color="primary" onClick={() => navigate(`/admin/user/add-user`)}>Add a new user account</Button>
         </div>
         <div className="col-sm-3">
           <Input type="number" placeholder="View Limit" value={limit} onChange={e => setLimit(e.target.value)} />
@@ -91,7 +95,7 @@ const UserList = () => {
                 </select>
               </td>
               <td>
-                <Button color="primary" onClick={() => navigate(`/user/user-detail/${user.id}`)}>Detail</Button>
+                <Button color="primary" onClick={() => navigate(`/admin/user/user-detail/${user.id}`)}>Detail</Button>
               </td>
               <td>
                 <Button color="primary" onClick={() => handleDelete(user.id)}>Delete</Button>

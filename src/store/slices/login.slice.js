@@ -3,7 +3,6 @@ import axios from 'axios';
 
 export const fetchLoginValidation = createAsyncThunk('login/fetchLoginValidation', async ({username, password}) => {
   const response = await axios.post('https://fakestoreapi.com/auth/login', {username, password});
-  console.log(response.data);
   return response.data;
 });
 

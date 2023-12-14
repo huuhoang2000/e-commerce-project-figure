@@ -36,10 +36,10 @@ function AdminLogin() {
   .then((action) => {
     const response = action.payload;
     if (response) {
-      console.log(response);
       alert('You have logged in successfully!');
       //store username in localStorage once login successful
       localStorage.setItem('username', username);
+      localStorage.setItem('role', response.role);
       dispatch(login());
 
       // Get the pre-login location from the session storage

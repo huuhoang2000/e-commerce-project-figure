@@ -11,4 +11,20 @@ export default class User {
     this.role = 'user' | 'admin';
     this.isDeleted = false;
   }
+
+//make it serializable
+toPlainObject() {
+  return {
+    id: this.id,
+    username: this.username,
+    email: this.email,
+    password: this.password,
+    name: this.name, // this is already a concatenated string
+    phone: this.phone,
+    address: this.address, // this is already a concatenated string
+    role: this.role,
+    isDeleted: this.isDeleted,
+  };
+}
+
 }

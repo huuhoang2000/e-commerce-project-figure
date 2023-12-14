@@ -16,13 +16,13 @@ const ProductList = () => {
   const dispatch = useDispatch();
   const products = useAppSelector(getAllProducts);
   const [searchTerm, setSearchTerm] = useState('');
-  const handleSearch = (term) => {
-    setSearchTerm(term);
-  }
+  // const handleSearch = (term) => {
+  //   setSearchTerm(term);
+  // }
 
-  const [filteredProducts, setFilteredData] = useState(products);
+  // const [filteredProducts, setFilteredData] = useState(products);
   const [selectedCategories, setSelectedCategories] = useState({});
-  
+  const [loading, setLoading] = useState(true); // Add this line
 
   const handleCategoryChange = event => {
     setSelectedCategories({
@@ -31,17 +31,11 @@ const ProductList = () => {
     });
   };
 
-  // const filteredbyCheckBox = filteredProducts.filter(product =>
-  //   product.category && selectedCategories[product.category]
-  // );
-
   const filterProducts = products.filter(product => {
     const matchesSearchTerm = product.title.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesCheckbox = product.category && selectedCategories[product.category];
     return matchesSearchTerm && matchesCheckbox;
   });
-
-
 
   const categories = useAppSelector(getCategory);
   useEffect(() => {
@@ -57,12 +51,16 @@ const ProductList = () => {
   }, [products]);
 
   useEffect(() => {
-    dispatch(fetchProducts());
+    dispatch(fetchProducts()).then(() => setLoading(false)); // Add this line
   });
 
   useEffect(() => {
-    dispatch(fetchProductCategory());
+    dispatch(fetchProductCategory()).then(() => setLoading(false)); // Add this line
   }, [dispatch]);
+
+  if (loading) {
+    return <div>Loading...</div> // Add this line
+  }
 
   return (
     <>

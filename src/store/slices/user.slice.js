@@ -39,14 +39,24 @@ const usersSlice = createSlice({
       const index = state.allUsers.findIndex(
         (user) => user.id === id && !user.isDeleted
       );
-      state.allUsers[index] = {
-        ...state.allUsers[index],
-        username: userFormDetail.username,
-        password: userFormDetail.password,
-        email: userFormDetail.email,
-        name: `${userFormDetail.name.firstname} ${userFormDetail.name.lastname}`,
-        phone: userFormDetail.phone,
-        address: `${userFormDetail.address.city}, ${userFormDetail.address.street}, ${userFormDetail.address.number}, ${userFormDetail.address.zipcode}`,
+      if (index !== -1) {
+        const updatedUser = {
+          ...state.allUsers[index],
+          username: userFormDetail.username,
+          password: userFormDetail.password,
+          email: userFormDetail.email,
+          name: `${userFormDetail.name.firstname} ${userFormDetail.name.lastname}`,
+          phone: userFormDetail.phone,
+          address: `${userFormDetail.address.city}, ${userFormDetail.address.street}, ${userFormDetail.address.number}, ${userFormDetail.address.zipcode}`,
+        };
+        return {
+          ...state,
+          allUsers: [
+            ...state.allUsers.slice(0, index),
+            updatedUser,
+            ...state.allUsers.slice(index + 1),
+          ],
+        };
       }
     },
   }, 

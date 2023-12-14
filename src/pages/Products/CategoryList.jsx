@@ -10,7 +10,6 @@ const CategoryList = () => {
   const dispatch = useDispatch();
   const categories = useAppSelector(getCategory);
   const navigate = useNavigate();
-  console.log(categories);
 
   useEffect(() => {
     dispatch(fetchProductCategory());

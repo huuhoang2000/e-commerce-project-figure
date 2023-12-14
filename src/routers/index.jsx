@@ -18,7 +18,7 @@ import Carts from "../pages/Carts"
 import AddNewCart from "../pages/Carts/AddNewCart";
 import CartList from "../pages/Carts/CartList";
 import AdminLogin, { checkTokenLogin } from "../pages/Admin/AdminLogin";
-import { CartDescription } from "../pages/Carts/CartDescription";
+import { CartDetail } from "../pages/Carts/CartDetail";
 import UpdateCart from "../pages/Carts/UpdateCart";
 // store : "/" => buy
 
@@ -129,7 +129,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "/admin/carts/cart-detail/:id",
-        element: <CartDescription />,
+        element: <CartDetail />,
       },
       {
         path: "/admin/carts/add-cart",

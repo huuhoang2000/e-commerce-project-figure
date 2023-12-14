@@ -12,7 +12,6 @@ const CartList = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const carts = useAppSelector(getAllCarts);
-  console.log(carts);
   useEffect(() => {
     dispatch(fetchAllCarts());
   }, []);

@@ -3,9 +3,7 @@ import axios from 'axios';
 //get all carts
 export const fetchAllCarts = createAsyncThunk('carts/fetchAllCarts', async () => {
     const response = await axios.get('https://fakestoreapi.com/carts');
-    console.log(response.data); // log the response data
     return response.data;
-
 });
 //get a single cart
 export const fetchACartById = createAsyncThunk('carts/fetchACartById', async (id) => {

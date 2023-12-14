@@ -7,6 +7,7 @@ import HeaderLayout from '../../layout/HeaderLayout';
 import FooterLayout from '../../layout/FooterLayout';
 import UserForm from '../../components/UserForm';
 import { useNavigate } from 'react-router-dom';
+import { createUser, fetchUser } from '../../store/slices/user.slice';
 
 function UserRegister() {
   const navigate = useNavigate();
@@ -36,7 +37,7 @@ function UserRegister() {
   return (
     <>
       <div><HeaderLayout></HeaderLayout></div>
-      <UserForm title="Add User" submitBtnText="Add" onSubmit={handleCreateNewUser} />
+      <UserForm title="Add User" submitBtnText="Add" onSubmit={handleCreateNewUser} autoComplete="new-password"/>
       <div><FooterLayout></FooterLayout></div>
     </>
     

@@ -37,8 +37,8 @@ const UserForm = ( {submitBtnText, onSubmit} ) => {
       <div className='d-flex justify-content-center' style={{alignItem: 'center', height: '125vh',backgroundColor: '#f0f0f0'}}>
         <Form onSubmit={handleFormSubmit} className="register-container row my-5 p-5">
             <FormGroup>
-              <Label htmlFor="name">User Name</Label>
-              <Input type="text" name="username" id="username" value={userDetail.username} onChange={handleUserChange} className='input-User'/>
+              <Label htmlFor="name">Username</Label>
+              <Input type="text" name="username" id="username" value={userDetail.username} onChange={handleUserChange} className='input-User' autoComplete={props.autoComplete}/>
             </FormGroup>
             <FormGroup>
               <Label htmlFor="email">Email</Label>
@@ -46,7 +46,7 @@ const UserForm = ( {submitBtnText, onSubmit} ) => {
             </FormGroup>
             <FormGroup>
               <Label htmlFor="password">Password</Label>
-              <Input type="password" name="password" id="password" value={userDetail.password} onChange={handleUserChange} className='input-User'/>
+              <Input type="password" name="password" id="password" value={userDetail.password} onChange={handleUserChange} className='input-User' autoComplete={props.autoComplete}/>
             </FormGroup>
             <FormGroup>
               <Label htmlFor="name">Name</Label>

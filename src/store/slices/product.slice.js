@@ -11,8 +11,9 @@ export const createProduct = createAsyncThunk('products/createProduct', async (p
   return response.data;
 })
 //Get a single product by id
-export const fetchProductsById = createAsyncThunk('products/fetchProductById', async (id) => {
-  const response = await axios.get(`https://fakestoreapi.com/products/${id}`);
+export const fetchProductsById = createAsyncThunk('products/fetchProductById', async (productId) => {
+  const response = await axios.get(`https://fakestoreapi.com/products/${productId}`);
+  // console.log(response.data)
   return response.data;
 })
 

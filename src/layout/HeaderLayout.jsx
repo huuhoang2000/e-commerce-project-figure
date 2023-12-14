@@ -13,6 +13,10 @@ const HeaderLayout = ( {children} ) => {
     // login state
     // get username from token once login is complete.
     const username = localStorage.getItem('username');
+    const role = localStorage.getItem('role');
+
+    // Filter the carts based on the user role
+    const userCarts = role === 'admin' ? carts : carts.filter(cart => cart.userId === username);
 
     const isLoggedIn = useAppSelector((state) => state.login.isLoggedIn);
     const dispatch = useDispatch();
@@ -25,7 +29,6 @@ const HeaderLayout = ( {children} ) => {
     };
 
     // Call this function when the user logs in
-
     useEffect(() => {
       const token = localStorage.getItem('token');
       if (token) {
@@ -46,7 +49,7 @@ const HeaderLayout = ( {children} ) => {
                 <NavLink to="/admin/products/product-list" className="navbarlink">Shop</NavLink>
               </NavItem>
               <NavItem className="pe-1 ps-1 navItem">
-                <NavLink href="#" className="navbarlink">Cart</NavLink>
+                <NavLink to="/admin/carts/cart-list" className="navbarlink">Cart</NavLink>
               </NavItem>
               {isLoggedIn || username ? (
                 <NavItem className="pe-1 ps-1 navItem">

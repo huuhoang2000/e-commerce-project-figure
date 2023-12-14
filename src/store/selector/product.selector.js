@@ -14,3 +14,8 @@ export const getProductsByCategory = createSelector(
     return products.filter(product => product.category === category);
   }
 );
+export const getProductDetailsById = createSelector(
+  productArrayState,
+  (_, productId) => productId,
+  (allProducts, productId) => allProducts.find(product => product.id === productId)
+);
